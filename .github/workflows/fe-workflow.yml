@@ -19,14 +19,14 @@ jobs:
       run:
         working-directory: ./NodeJS/github-actions/react-express/todo-app-react
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - run: npm install
       - run: npm run build
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: react-build
           path: NodeJS/github-actions/react-express/todo-app-react/dist
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: react-build
       - name: Azure Login
@@ -58,7 +58,7 @@ jobs:
       name: staging
       url: https://your-staging-url
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: react-build
       - name: Azure Login
@@ -80,7 +80,7 @@ jobs:
       name: production
       url: https://your-prod-url
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: react-build
       - name: Azure Login
