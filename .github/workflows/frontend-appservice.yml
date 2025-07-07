@@ -51,4 +51,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: github-action-sandbox-fe2
-        package: NodeJS/github-actions/react-express/github-action-sandbox-fe2/dist
+        package: NodeJS/github-actions/react-express/todo-app-react/dist
