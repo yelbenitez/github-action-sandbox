@@ -50,5 +50,5 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: todo-app-frontend
-        package: NodeJS/github-actions/react-express/todo-app-react/dist
+        app-name: github-action-sandbox-fe
+        package: NodeJS/github-actions/react-express/github-action-sandbox-fe/dist
