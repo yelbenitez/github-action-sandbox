@@ -8,7 +8,22 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v4
+          - name: Checkout code
+            uses: actions/checkout@v4
 
-          - name: Compile
+          - name: Compile # Placeholder for compilation step
             run: echo "Compiling the code..."
+
+          - name: Set up Node.js
+            uses: actions/setup-node@v4
+            with:
+                node-version: '20'
+        
+          - name: Install dependencies
+            run: npm install
+
+          - name: run prettier
+            run: npm run format:check
+
+          - name: done  
+            run: ehco "DONE"
