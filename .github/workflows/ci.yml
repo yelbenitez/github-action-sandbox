@@ -7,6 +7,9 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./NodeJS/github-actions/react-express/todo-app-react
         steps:
           - name: Checkout code
             uses: actions/checkout@v4
