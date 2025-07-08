@@ -30,8 +30,6 @@ jobs:
         with:
           name: react-build
           path: NodeJS/github-actions/react-express/todo-app-react/dist
-      - name: List files
-        run: ls -R
 
 
   deploy-dev:
@@ -42,10 +40,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: react-build
+          path: build
       - name: List downloaded files
         run: |
           echo "Listing contents of react-build directory:"
-          ls -alh react-build
+          ls -alh build
 
       - name: Azure Login
         uses: azure/login@v1
@@ -57,7 +56,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: github-action-sandbox-fe2
-          package: react-build
+          package: build
 
   # deploy-staging:
   #   needs: deploy-dev
