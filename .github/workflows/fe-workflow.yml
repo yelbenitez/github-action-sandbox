@@ -3,9 +3,9 @@ name: fe workflow
 on:
   push:
     branches: ["main"]
-    paths: 
-      - "NodeJS/github-actions/react-express/todo-app-react/**"
-      - ".github/workflows/fe-workflow.yml"
+    # paths: 
+    #   - "NodeJS/github-actions/react-express/todo-app-react/**"
+    #   - ".github/workflows/fe-workflow.yml"
   workflow_dispatch:
 
 permissions:
