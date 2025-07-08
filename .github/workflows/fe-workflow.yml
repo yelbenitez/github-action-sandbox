@@ -30,6 +30,9 @@ jobs:
         with:
           name: react-build
           path: NodeJS/github-actions/react-express/todo-app-react/dist
+      - name: List files
+        run: ls -R
+
 
   deploy-dev:
     needs: build
@@ -49,7 +52,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: github-action-sandbox-fe2
-          package: ./react-build
+          package: react-build
 
   # deploy-staging:
   #   needs: deploy-dev
