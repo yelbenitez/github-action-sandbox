@@ -16,6 +16,20 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, staging, prod]
+        include:
+          - environment: dev
+            github_environment: Development
+            artifact_name: react-build-dev
+          - environment: staging
+            github_environment: Staging
+            artifact_name: react-build-staging
+          - environment: prod
+            github_environment: Production
+            artifact_name: react-build-prod
+    environment: ${{ matrix.github_environment }}
     defaults:
       run:
         working-directory: ./NodeJS/github-actions/react-express/todo-app-react
@@ -25,11 +39,14 @@ jobs:
         with:
           node-version: '20'
       - run: npm install
-      - run: npm run build
-      - name: Upload artifact
+      - name: Build for ${{ matrix.environment }}
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+      - name: Upload ${{ matrix.environment }} artifact
         uses: actions/upload-artifact@v4
         with:
-          name: react-build
+          name: ${{ matrix.artifact_name }}
           path: NodeJS/github-actions/react-express/todo-app-react/dist
 
 
@@ -40,13 +57,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: react-build
+          name: react-build-dev
           path: build
-
-      - name: List downloaded files # This step is optional but useful for debugging
-        run: |
-          echo "Listing contents of react-build directory:"
-          ls -alh build
 
       - name: Azure Login
         uses: azure/login@v1
@@ -61,13 +73,13 @@ jobs:
           package: build
 
   deploy-staging:
-    needs: deploy-dev
+    needs: build
     runs-on: ubuntu-latest
     environment: Staging
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: react-build
+          name: react-build-staging
           path: build
       - name: Azure Login
         uses: azure/login@v1
@@ -82,13 +94,13 @@ jobs:
           package: build
 
   deploy-prod:
-    needs: deploy-staging
+    needs: build
     runs-on: ubuntu-latest
     environment: Production
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: react-build
+          name: react-build-prod
           path: build
       - name: Azure Login
         uses: azure/login@v1
